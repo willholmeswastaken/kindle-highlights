@@ -6,6 +6,7 @@ import {
     signIn,
 } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
+import { useRouter } from 'next/router'
 
 interface AuthProps {
     providers: Record<
@@ -15,6 +16,7 @@ interface AuthProps {
 }
 
 const Auth: FunctionComponent<AuthProps> = ({ providers }) => {
+    const router = useRouter();
     return (
         <>
             <div className="-mt-56 flex min-h-screen flex-col items-center justify-center py-2 px-14 text-center">
@@ -29,7 +31,7 @@ const Auth: FunctionComponent<AuthProps> = ({ providers }) => {
                             <div key={provider.name}>
                                 <button
                                     className="rounded-lg bg-blue-500 p-3 text-white"
-                                    onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+                                    onClick={() => signIn(provider.id, { callbackUrl: router.query.callbackUrl as string })}
                                 >
                                     Sign in with {provider.name}
                                 </button>
