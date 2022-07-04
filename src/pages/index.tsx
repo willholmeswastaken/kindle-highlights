@@ -1,11 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import IdentityPanel from "../components/identity/identityPanel";
-import { trpc } from "../utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
-
   return (
     <>
       <Head>
@@ -37,10 +34,6 @@ const Home: NextPage = () => {
             </a>
           </section>
         </main>
-
-        <div className="py-6 text-2xl text-blue-500">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
-        </div>
       </div>
     </>
   );
