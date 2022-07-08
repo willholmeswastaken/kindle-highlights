@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react"
+import { HoverLink } from '../';
 import IdentityDetails from "./identityDetails";
 
 const IdentityPanel = (): JSX.Element => {
@@ -12,26 +13,21 @@ const IdentityPanel = (): JSX.Element => {
     }
 
     const onLogin = () => signIn();
+    const onLinkClick = () => {
+        if (session)
+            onLogout();
+        else
+            onLogin();
+    };
 
     return (
         <>
-            {session ?
-                (
-                    <a className="flex flex-col h-fit w-fit sm:w-60 hover:bg-gray-300 rounded-xl text-brandText mt-4 cursor-pointer" onClick={onLogout}>
-                        <IdentityDetails
-                            name={session?.user?.name!}
-                            image={session?.user?.image!}
-                        />
-                    </a>
-                )
-                : (
-                    <a className="flex flex-col h-fit w-fit sm:w-60 hover:bg-gray-300 rounded-xl text-brandText mt-4 cursor-pointer" onClick={onLogin}>
-                        <IdentityDetails
-                            name="Sign in"
-                            image="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
-                        />
-                    </a>
-                )}
+            <HoverLink onClick={onLinkClick}>
+                <IdentityDetails
+                    name={session?.user?.name ?? 'Sign In'}
+                    image={session?.user?.image ?? 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png'}
+                />
+            </HoverLink>
         </>
     )
 }

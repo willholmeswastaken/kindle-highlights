@@ -10,7 +10,7 @@ const IdentityDetails = ({
     image
 }: IdentityDetailsProps): JSX.Element => {
     return (
-        <div className="flex flex-row p-2">
+        <div className="flex flex-row w-fit p-2">
             <img
                 className="inline-block h-8 w-8 rounded-full ring-white"
                 src={image}
