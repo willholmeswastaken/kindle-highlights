@@ -15,7 +15,7 @@ const IdentityDetails = ({
                 className="inline-block h-8 w-8 rounded-full ring-white"
                 src={image}
                 alt="profile picture" />
-            <div className="flex flex-col">
+            <div className="hidden md:flex md:flex-col">
                 <span className="pl-2 mt-1 font-semibold text-brandText">{name}</span>
             </div>
         </div>

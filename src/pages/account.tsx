@@ -2,7 +2,7 @@ import { signOut } from "next-auth/react"
 import { LogoutIcon } from "@heroicons/react/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
-import UserLoggedInNav from "../components/UserLoggedInNav";
+import SideNav from "../components/SideNav";
 
 const Account: NextPage = () => {
     const logout: () => void = () => signOut();
@@ -17,7 +17,7 @@ const Account: NextPage = () => {
 
             <div className="flex flex-row">
                 <nav className="flex-auto hidden sm:block sm:w-[28rem] md:w-[26rem]">
-                    <UserLoggedInNav />
+                    <SideNav />
                 </nav>
                 <main className="flex-auto container min-h-screen p-10 px-0 mx-auto md:py-12 md:pl-24 gap-y-8">
                     <div className="px-5">
