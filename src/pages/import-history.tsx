@@ -1,10 +1,5 @@
-import { CollectionIcon, HomeIcon, SwitchHorizontalIcon } from "@heroicons/react/solid";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import BottomNav from "../components/BottomNav";
-import SideNav from "../components/SideNav";
-import { navItems } from "../info";
 
 const ImportHistory: NextPage = () => {
     return (
@@ -15,21 +10,9 @@ const ImportHistory: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <div className="flex flex-col sm:flex-row">
-                <nav className="flex-auto flex sm:w-[12rem] md:w-[26rem]">
-                    <SideNav />
-                </nav>
-
-                <main className="flex-auto container min-h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
-                    <div className="flex flex-col h-screen w-full gap-y-4 sm:gap-y-8">
-                        <h1 className="text-4xl bold text-brandText">Import History</h1>
-                        <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
-                    </div>
-                </main>
-
-                <footer>
-                    <BottomNav />
-                </footer>
+            <div className="flex flex-col h-screen w-full gap-y-4 sm:gap-y-8">
+                <h1 className="text-4xl bold text-brandText">Import History</h1>
+                <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
             </div>
         </>
     );
