@@ -6,7 +6,7 @@ import BottomNav from "../components/BottomNav";
 import SideNav from "../components/SideNav";
 import { navItems } from "../info";
 
-const Dashboard: NextPage = () => {
+const ImportHistory: NextPage = () => {
     return (
         <>
             <Head>
@@ -22,7 +22,7 @@ const Dashboard: NextPage = () => {
 
                 <main className="flex-auto container min-h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
                     <div className="flex flex-col h-screen w-full gap-y-4 sm:gap-y-8">
-                        <h1 className="text-4xl bold text-brandText">Dashboard</h1>
+                        <h1 className="text-4xl bold text-brandText">Import History</h1>
                         <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
                     </div>
                 </main>
@@ -35,4 +35,4 @@ const Dashboard: NextPage = () => {
     );
 };
 
-export default Dashboard;
+export default ImportHistory;
