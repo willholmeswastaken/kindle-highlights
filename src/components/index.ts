@@ -1,1 +1,2 @@
-export * from "./identityPanel";
+export * from "./identity/identityPanel";
+export * from "./HoverLink";
