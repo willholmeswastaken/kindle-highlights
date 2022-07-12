@@ -1,7 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from 'next/link'
-import IdentityPanel from "../components/identity/identityPanel";
 import UserLoggedInNav from "../components/UserLoggedInNav";
 
 const Dashboard: NextPage = () => {
@@ -13,13 +11,17 @@ const Dashboard: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <nav className="flex flex-row px-2">
-                <UserLoggedInNav />
-            </nav>
-
-            <div className="container flex flex-col items-center min-h-screen p-10 px-0 mx-auto md:py-20 md:p-10 md:px-0 gap-y-8">
-                <main className="p-5 md:p-0">
-
+            <div className="flex flex-row">
+                <nav className="flex-auto hidden sm:block sm:w-[28rem] md:w-[26rem]">
+                    <UserLoggedInNav />
+                </nav>
+                <main className="flex-auto container min-h-screen p-10 px-0 mx-auto md:py-12 md:pl-24 gap-y-8">
+                    <div className="px-5">
+                        <div className="flex flex-col h-screen w-full gap-y-8">
+                            <h1 className="text-4xl bold text-brandText">Dashboard</h1>
+                            <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
+                        </div>
+                    </div>
                 </main>
             </div>
         </>

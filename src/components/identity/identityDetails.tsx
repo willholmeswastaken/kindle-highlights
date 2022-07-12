@@ -16,7 +16,7 @@ const IdentityDetails = ({
                 src={image}
                 alt="profile picture" />
             <div className="flex flex-col">
-                <span className="pl-2 mt-1">{name}</span>
+                <span className="pl-2 mt-1 font-semibold text-brandText">{name}</span>
             </div>
         </div>
     )
