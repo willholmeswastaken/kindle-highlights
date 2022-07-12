@@ -1,14 +1,18 @@
 import React from "react";
 import { HoverLink } from ".";
 import IdentityPanel from "./identity/identityPanel";
-import { NextRouter, useRouter } from "next/router";
 import { navItems } from "../info";
 import { isCurrentRoute } from "../utils/routing";
+import { useSession } from "next-auth/react";
 
-const SideNav = () => {
-    const router: NextRouter = useRouter();
+interface SideNavProps {
+    currentUrl: string;
+}
+
+const SideNav = ({ currentUrl }: SideNavProps) => {
+    const { data: session } = useSession();
     return (
-        <>
+        <nav className={`${session ? 'block' : 'hidden'} flex-auto sm:w-[12rem] md:w-[26rem]`}>
             <div className="sm:flex sm:flex-col mt-6 sm:mt-4 sm:py-8 px-3 sm:px-5">
                 <div className="mb-4">
                     <IdentityPanel />
@@ -17,7 +21,7 @@ const SideNav = () => {
                     {navItems.map((x) => (
                         <HoverLink
                             key={x.displayName}
-                            active={isCurrentRoute(x.linkUrl, router.pathname)}
+                            active={isCurrentRoute(x.linkUrl, currentUrl)}
                             linkUrl={x.linkUrl}
                         >
                             <div className="flex flex-row w-fit p-1">
@@ -30,7 +34,7 @@ const SideNav = () => {
                     ))}
                 </div>
             </div>
-        </>
+        </nav>
     );
 };
 

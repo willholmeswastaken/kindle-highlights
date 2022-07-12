@@ -5,15 +5,27 @@ import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
+import SideNav from "../components/SideNav";
+import BottomNav from "../components/BottomNav";
+import { NextRouter, useRouter } from "next/router";
 
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const router: NextRouter = useRouter();
   return (
     <SessionProvider session={session}>
-      <div className="bg-brandBackground">
-        <Component {...pageProps} />
+      <div className="bg-brandBackground w-screen h-screen">
+        <div className="flex flex-col sm:flex-row">
+          <SideNav currentUrl={router.pathname} />
+
+          <main className="flex-auto container min-h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
+            <Component {...pageProps} />
+          </main>
+
+          <BottomNav currentUrl={router.pathname} />
+        </div>
       </div>
     </SessionProvider>
   );

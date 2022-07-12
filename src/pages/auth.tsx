@@ -36,7 +36,7 @@ const Auth: FunctionComponent<AuthProps> = ({ providers }) => {
 
     return (
         <>
-            <div className="flex flex-row w-screen h-screen sm:items-center sm:justify-center">
+            <div className="flex flex-row">
                 <div className="flex flex-col w-full md:w-1/2 px-4 pt-12 sm:pt-0 items-end">
                     <div className="flex flex-col w-96">
                         <span className="text-4xl tracking-wide text-brandText font-bold">Log in to</span>
@@ -50,7 +50,7 @@ const Auth: FunctionComponent<AuthProps> = ({ providers }) => {
                 <div className='flex flex-row w-1/2'>
                     <div className="flex flex-row w-full px-4 md:px-0">
                         <img
-                            className="w-60 lg:w-80 hidden sm:block md:ml-12 lg:ml-48 rounded-lg shadow"
+                            className="w-60 lg:w-80 hidden md:block md:ml-4 rounded-lg shadow"
                             src="https://www.thestatesman.com/wp-content/uploads/2019/10/1500x500_ed.jpg"
                             alt="Logo"
                         />
