@@ -1,8 +1,12 @@
+import { signOut } from "next-auth/react"
+import { LogoutIcon } from "@heroicons/react/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
 import UserLoggedInNav from "../components/UserLoggedInNav";
 
 const Account: NextPage = () => {
+    const logout: () => void = () => signOut();
+
     return (
         <>
             <Head>
@@ -19,7 +23,15 @@ const Account: NextPage = () => {
                     <div className="px-5">
                         <div className="flex flex-col h-screen w-full gap-y-8">
                             <h1 className="text-4xl bold text-brandText">Account</h1>
-                            <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
+                            <div className="flex flex-col gap-y-4">
+                                <span className="text-md semibold text-gray-600">Security</span>
+                                <div onClick={logout} className="flex flex-col bg-white rounded-lg w-1/2 h-14 border-4 cursor-pointer border-white hover:bg-gray-100 ease-in-out duration-300">
+                                    <div className="flex flex-row gap-x-4 mt-3 ml-3">
+                                        <LogoutIcon className="h-6 w-6 text-red-500" />
+                                        <span className="">Log out</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>

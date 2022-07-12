@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import { NextRouter, useRouter } from 'next/router'
 import { HoverLink } from '../';
 import IdentityDetails from "./identityDetails";
