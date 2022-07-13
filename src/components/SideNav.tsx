@@ -24,7 +24,7 @@ const SideNav = ({ currentUrl }: SideNavProps) => {
                             active={isCurrentRoute(x.linkUrl, currentUrl)}
                             linkUrl={x.linkUrl}
                         >
-                            <div className="flex flex-row w-fit p-1">
+                            <div className="flex flex-row w-full p-1">
                                 {x.icon}
                                 <div className="hidden md:flex md:flex-col">
                                     <span className="pl-2 mt-2">{x.displayName}</span>
