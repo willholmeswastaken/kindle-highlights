@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from 'next/link'
-import IdentityPanel from "../components/identity/identityPanel";
 
 const Home: NextPage = () => {
   return (
@@ -12,11 +11,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <nav className="flex flex-row px-2">
-        <IdentityPanel />
-      </nav>
-
-      <div className="container flex flex-col items-center min-h-screen p-10 px-0 mx-auto md:py-20 md:p-10 md:px-0 gap-y-8">
+      <>
         <h1 className="font-extrabold text-center text-7xl">
           Kindle <span className="text-blue-500">Highlights</span>
         </h1>
@@ -35,7 +30,7 @@ const Home: NextPage = () => {
             </div>
           </section>
         </main>
-      </div>
+      </>
     </>
   );
 };

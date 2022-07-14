@@ -9,7 +9,7 @@ interface HoverLinkProps {
 }
 
 export const HoverLink = ({ linkUrl, children, onClick, active }: HoverLinkProps) => {
-    const classNames = 'flex flex-col h-fit w-fit md:w-fill pr-1 md:pr-12 rounded-xl cursor-pointer'
+    const classNames = 'flex flex-col h-fit w-fit md:w-full xl:w-3/4 pr-1 md:pr-12 rounded-xl cursor-pointer'
     const linkClassNames = useMemo(() => active
         ? `${classNames} bg-white text-blue-700`
         : `${classNames} hover:bg-gray-200 ease-in-out duration-500 text-gray-500`, [active]);
