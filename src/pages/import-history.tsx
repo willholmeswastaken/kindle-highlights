@@ -1,7 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
+    const imports = trpc.useQuery(["highlights.getAllImports"]);
     return (
         <>
             <Head>
@@ -12,7 +14,18 @@ const ImportHistory: NextPage = () => {
 
             <div className="flex flex-col h-screen w-full gap-y-4 sm:gap-y-8">
                 <h1 className="text-4xl bold text-brandText">Import History</h1>
-                <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4"></div>
+                <div className="bg-white rounded-lg h-1/2 w-full lg:w-3/4">
+                    {
+                        imports.data
+                            ? imports.data.map(x => {
+                                return <div className="flex flex-col" key={x.id}>
+                                    <span>{x.importedOn.toString()}</span>
+                                    <span>{x.containsTitles}</span>
+                                </div>;
+                            })
+                            : 'No imports found!'
+                    }
+                </div>
             </div>
         </>
     );

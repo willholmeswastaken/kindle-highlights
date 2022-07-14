@@ -9,8 +9,19 @@ interface ImportFormInputs {
 }
 
 const Import: NextPage = () => {
-    const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm<ImportFormInputs>();
-    const onSubmit: SubmitHandler<ImportFormInputs> = data => console.log(data);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<ImportFormInputs>();
+    const onSubmit: SubmitHandler<ImportFormInputs> = async data => {
+        console.log(data);
+        const res = await fetch('/api/fileupload', {
+            method: 'POST',
+            body: data.file[0]
+        });
+        if (res.status === 200) {
+            // success
+        } else {
+            // failure
+        }
+    }
     const file = watch('file');
     const fileName = useMemo(() => {
         if (file && file.length > 0)
