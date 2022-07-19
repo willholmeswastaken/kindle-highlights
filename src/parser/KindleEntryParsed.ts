@@ -83,8 +83,18 @@ export class KindleEntryParsed {
       ocurrenceIndex + 1,
       closingParenthesesIndex
     );
-    // Save authors
-    return authors;
+
+    if (!authors.includes(",")) {
+      return authors;
+    }
+
+    // todo: I know this is inefficient, need to refactor.
+    let returningAuthors: string = authors
+      .split(",")
+      .map((x) => x.trim())
+      .reduceRight((acc, val) => (acc += ` ${val}`))
+      .trim();
+    return returningAuthors;
   }
 
   parseBook() {

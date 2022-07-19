@@ -2,6 +2,7 @@ import { CloudUploadIcon } from "@heroicons/react/outline";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
@@ -16,24 +17,26 @@ const ImportHistory: NextPage = () => {
 
             <div className="flex flex-col w-full gap-y-4 sm:gap-y-8">
                 <h1 className="text-4xl bold text-brandText">Import History</h1>
-                <div className="rounded-lg bg-white w-full lg:w-3/4 p-4">
+                <div className="rounded-lg w-full lg:w-3/4 p-4">
                     <div className="flex flex-col gap-y-5">
                         {
-                            imports.data
+                            imports.data && imports.data.length > 0
                                 ? imports.data.map(x => {
-                                    return <div className="flex flex-row hover:bg-gray-50 h-16 border-y border-y-gray-100 py-3 px-2 hover:cursor-pointer" key={x.id}>
-                                        <div className="bg-blue-50 rounded-full p-2 h-10 w-10">
-                                            <CloudUploadIcon className="h-6 w-6 text-blue-600 " />
-                                        </div>
-                                        <div className="flex flex-col pl-2 flex-grow">
-                                            <span className="text-brandText hidden md:block capitalize">{formatRelative(x.importedOn, new Date())}</span>
-                                            <span className="text-sm text-brandText md:hidden">{formatDistance(x.importedOn, new Date(), { addSuffix: true })}</span>
-                                            {x.totalBookCount > 0
-                                                ? <span className="text-sm italic text-gray-400">Includes ({x.totalBookCount}) Book{x.totalBookCount > 1 ? 's' : ''}</span>
-                                                : <span className="text-xs md:text-sm italic text-gray-400">No books imported</span>}
-                                        </div>
-                                        <button type="button" className="bg-blue-100 text-blue-600 w-16 h-7 mt-2 rounded-lg">View</button>
-                                    </div>;
+                                    return <Link key={x.id} href={`/view-import/${x.id}`}>
+                                        <a className="flex flex-row bg-white rounded-lg hover:bg-gray-50 h-16 border-y border-y-gray-100 py-3 px-2 hover:cursor-pointer" key={x.id}>
+                                            <div className="bg-blue-50 rounded-full p-2 h-10 w-10">
+                                                <CloudUploadIcon className="h-6 w-6 text-blue-600 " />
+                                            </div>
+                                            <div className="flex flex-col pl-2 flex-grow">
+                                                <span className="text-brandText hidden md:block capitalize">{formatRelative(x.importedOn, new Date())}</span>
+                                                <span className="text-sm text-brandText md:hidden">{formatDistance(x.importedOn, new Date(), { addSuffix: true })}</span>
+                                                {x.totalBookCount > 0
+                                                    ? <span className="text-sm italic text-gray-400">Includes ({x.totalBookCount}) Book{x.totalBookCount > 1 ? 's' : ''}</span>
+                                                    : <span className="text-xs md:text-sm italic text-gray-400">No books imported</span>}
+                                            </div>
+                                            <button type="button" className="bg-blue-100 text-blue-600 w-16 h-7 mt-2 rounded-lg">View</button>
+                                        </a>
+                                    </Link>;
                                 })
                                 : 'No imports found!'
                         }

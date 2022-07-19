@@ -6,7 +6,7 @@ import * as kindleClippings from "../../parser";
 import { prisma } from "../../server/db/client";
 
 import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
-import { Book, HighlightImport, User } from "@prisma/client";
+import { Book, HighlightImport } from "@prisma/client";
 import { ApiResponse } from "../../models/apiResponse";
 
 const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -16,14 +16,6 @@ const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
       errorMessage: "Unauthenticated user",
       responseCode: "401",
     } as ApiResponse<string>);
-    return;
-  }
-
-  try {
-    const test = kindleClippings.readKindleClipping(req.body);
-    console.log(test);
-  } catch (err) {
-    console.log(err);
     return;
   }
 
@@ -66,6 +58,7 @@ const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
     if (!book) continue;
+    let totalHighlights: number = 0;
     for (const highlight of value) {
       await prisma.highlight.create({
         data: {
@@ -75,7 +68,16 @@ const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
           location: highlight.location,
         },
       });
+      totalHighlights++;
     }
+    await prisma.book.update({
+      data: {
+        totalHighlights,
+      },
+      where: {
+        id: book.id,
+      },
+    });
   }
 
   await prisma.highlightImport.update({
