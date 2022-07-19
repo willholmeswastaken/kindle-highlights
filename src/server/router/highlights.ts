@@ -26,6 +26,9 @@ export const highlightsRouter = createRouter()
         where: {
           userId: ctx.session.user.email!,
         },
+        orderBy: {
+          importedOn: "desc",
+        },
       });
 
       return imports;

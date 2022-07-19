@@ -20,7 +20,7 @@ const MyApp: AppType = ({
         <div className="flex flex-col sm:flex-row">
           <SideNav currentUrl={router.pathname} />
 
-          <main className="flex-auto container min-h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
+          <main className="flex-auto container h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
             <Component {...pageProps} />
           </main>
 
