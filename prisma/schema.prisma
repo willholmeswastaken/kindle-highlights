@@ -67,6 +67,7 @@ model HighlightImport {
   importedOn     DateTime @default(now())
   userId         String
   containsTitles String?
+  totalBookCount Int      @default(0)
   user           User     @relation(fields: [userId], references: [email], onDelete: Cascade)
   books          Book[]
 }

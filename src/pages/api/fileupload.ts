@@ -54,8 +54,10 @@ const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   let bookTitles: string = "";
+  let totalBookCount: number = 0;
   for (let [key, value] of books.entries()) {
     bookTitles += `${key} `;
+    totalBookCount++;
     const book: Book | null = await prisma.book.create({
       data: {
         title: key,
@@ -82,6 +84,7 @@ const fileUpload = async (req: NextApiRequest, res: NextApiResponse) => {
     },
     data: {
       containsTitles: bookTitles.trimEnd(),
+      totalBookCount: totalBookCount,
     },
   });
 
