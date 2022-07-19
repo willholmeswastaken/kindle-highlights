@@ -73,12 +73,13 @@ model HighlightImport {
 }
 
 model Book {
-  id         String          @id @default(cuid())
-  author     String
-  title      String
-  importId   String
-  import     HighlightImport @relation(fields: [importId], references: [id], onDelete: Cascade)
-  highlights Highlight[]
+  id              String          @id @default(cuid())
+  author          String
+  title           String
+  importId        String
+  totalHighlights Int             @default(0)
+  import          HighlightImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+  highlights      Highlight[]
 }
 
 model Highlight {

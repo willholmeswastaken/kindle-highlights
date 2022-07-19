@@ -63,7 +63,7 @@ export const AlertDialog = ({ title, description, buttonText, isOpen, closeModal
                                         </p>
                                     </div>
 
-                                    <div className="mt-4">
+                                    <div className="mt-4 flex flex-row-reverse">
                                         <button
                                             type="button"
                                             className={`inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${buttonColor}`}

@@ -1,24 +1,31 @@
 import { UploadIcon } from "@heroicons/react/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { AlertDialog } from "../components";
+import { ApiResponse } from "../models/apiResponse";
 
 interface ImportFormInputs {
     file: FileList;
 }
 
 const Import: NextPage = () => {
+    const router = useRouter();
     const { register, handleSubmit, watch, formState: { errors, isSubmitting } } = useForm<ImportFormInputs>();
     const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
     const [showFailureDialog, setShowFailureDialog] = useState<boolean>(false);
+    const [importId, setImportId] = useState<string>();
     const onSubmit: SubmitHandler<ImportFormInputs> = async data => {
         const res = await fetch('/api/fileupload', {
             method: 'POST',
             body: data.file[0]
         });
         if (res.status === 201) {
+            const response: ApiResponse<string> = await res.json();
+            setImportId(response.data);
+
             setShowSuccessDialog(true);
             setShowFailureDialog(false);
         } else {
@@ -34,7 +41,11 @@ const Import: NextPage = () => {
         return 'File not uploaded';
     }, [file]);
 
-    const onDismissSuccessDialog = () => setShowSuccessDialog(false);
+    const onDismissSuccessDialog = () => {
+        setShowSuccessDialog(false);
+        router.push(`/view-import/${importId}`);
+    };
+
     const onDismissFailureDialog = () => setShowFailureDialog(false);
     return (
         <>
@@ -55,7 +66,7 @@ const Import: NextPage = () => {
             <AlertDialog
                 title="Highlights imported!"
                 description="Your highlights have been imported successfully!"
-                buttonText="Thanks"
+                buttonText="Take me there"
                 buttonType="success"
                 isOpen={showSuccessDialog}
                 closeModal={onDismissSuccessDialog} />
@@ -64,7 +75,7 @@ const Import: NextPage = () => {
                 <h1 className="text-4xl bold text-brandText">Import</h1>
                 <div className="h-1/2 w-full lg:w-3/4">
                     <form className="flex flex-col gap-y-4 justify-center items-center" onSubmit={handleSubmit(onSubmit)}>
-                        <div className="flex flex-col bg-white rounded-lg w-full lg:w-1/2 h-fit py-2">
+                        <div className="flex flex-col bg-white rounded-lg w-full xl:w-2/3 h-fit py-2">
                             <div className="flex flex-row gap-x-4 mt-1 ml-3">
                                 <div className="bg-blue-50 rounded-full p-2 h-10 w-10 mt-1">
                                     <UploadIcon className="h-6 w-6 text-blue-600 " />
