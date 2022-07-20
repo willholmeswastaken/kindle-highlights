@@ -6,7 +6,7 @@ import Link from "next/link";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
-    const imports = trpc.useQuery(["highlights.getAllImports"]);
+    const imports = trpc.useQuery(["imports.getAllImports"]);
     return (
         <>
             <Head>
@@ -34,7 +34,6 @@ const ImportHistory: NextPage = () => {
                                                     ? <span className="text-sm italic text-gray-400">Includes ({x.totalBookCount}) Book{x.totalBookCount > 1 ? 's' : ''}</span>
                                                     : <span className="text-xs md:text-sm italic text-gray-400">No books imported</span>}
                                             </div>
-                                            <button type="button" className="bg-blue-100 text-blue-600 w-16 h-7 mt-2 rounded-lg">View</button>
                                         </a>
                                     </Link>;
                                 })

@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { createRouter } from "./context";
 import { z } from "zod";
 
-export const highlightsRouter = createRouter()
+export const importsRouter = createRouter()
   .query("getSession", {
     resolve({ ctx }) {
       return ctx.session;
