@@ -39,7 +39,7 @@ const ViewBook: NextPage = () => {
                                         <button type="button" className="bg-blue-100 text-blue-600 flex-auto font-semibold w-16 h-7 mt-2 rounded-lg">...</button>
                                     </div>;
                                 })
-                                : 'No imports found!'
+                                : 'No book highlights found!'
                         }
                     </div>
                 </div>
