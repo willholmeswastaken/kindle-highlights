@@ -16,11 +16,11 @@ const MyApp: AppType = ({
   const router: NextRouter = useRouter();
   return (
     <SessionProvider session={session}>
-      <div className="bg-brandBackground w-screen h-screen">
+      <div className="bg-brandBackground w-screen min-h-screen">
         <div className="flex flex-col sm:flex-row">
           <SideNav currentUrl={router.pathname} />
 
-          <main className="flex-auto container h-screen px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
+          <main className="flex-auto container h-fit overflow-auto mb-[76px] sm:mb-0 px-5 mx-auto sm:py-12 sm:pl-0 sm:gap-y-8">
             <Component {...pageProps} />
           </main>
 
