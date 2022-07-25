@@ -24,6 +24,9 @@ export const importsRouter = createRouter()
         orderBy: {
           importedOn: "desc",
         },
+        include: {
+          vaultRecord: true,
+        },
       });
 
       return imports;
