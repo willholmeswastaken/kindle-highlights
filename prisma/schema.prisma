@@ -63,13 +63,14 @@ model VerificationToken {
 }
 
 model HighlightImport {
-  id             String   @id @default(cuid())
-  importedOn     DateTime @default(now())
+  id             String        @id @default(cuid())
+  importedOn     DateTime      @default(now())
   userId         String
   containsTitles String?
-  totalBookCount Int      @default(0)
-  user           User     @relation(fields: [userId], references: [email], onDelete: Cascade)
+  totalBookCount Int           @default(0)
+  user           User          @relation(fields: [userId], references: [email], onDelete: Cascade)
   books          Book[]
+  VaultRecord    VaultRecord[]
 }
 
 model Book {
@@ -89,4 +90,12 @@ model Highlight {
   location String
   bookId   String
   book     Book    @relation(fields: [bookId], references: [id], onDelete: Cascade)
+}
+
+model VaultRecord {
+  id       String          @id @default(cuid())
+  importId String
+  import   HighlightImport @relation(fields: [importId], references: [id], onDelete: Cascade)
+  userId   String
+  savedOn  DateTime        @default(now())
 }
