@@ -3,11 +3,6 @@ import { createRouter } from "./context";
 import { z } from "zod";
 
 export const importsRouter = createRouter()
-  .query("getSession", {
-    resolve({ ctx }) {
-      return ctx.session;
-    },
-  })
   .middleware(async ({ ctx, next }) => {
     // Any queries or mutations after this middleware will
     // raise an error unless there is a current session
