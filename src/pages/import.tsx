@@ -71,7 +71,7 @@ const Import: NextPage = () => {
                 isOpen={showSuccessDialog}
                 closeModal={onDismissSuccessDialog} />
 
-            <div className="flex flex-col h-screen w-full lg:w-3/4 items-center gap-y-4 sm:gap-y-8">
+            <div className="flex flex-col h-screen w-full lg:w-3/4 items-start md:items-center gap-y-4 sm:gap-y-8">
                 <h1 className="text-4xl bold text-brandText">Import</h1>
                 <div className="h-1/2 w-full lg:w-3/4">
                     <form className="flex flex-col gap-y-4 justify-center items-center" onSubmit={handleSubmit(onSubmit)}>

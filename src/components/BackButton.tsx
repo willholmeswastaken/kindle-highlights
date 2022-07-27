@@ -1,16 +1,26 @@
 import { ArrowLeftIcon } from '@heroicons/react/solid';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react'
 
 interface BackButtonProps {
-    url: string;
+    urlOverride?: string;
 }
 
-const BackButton = ({ url }: BackButtonProps) => {
+const BackButton = ({ urlOverride }: BackButtonProps) => {
+    const router = useRouter();
+    const goBack = () => router.back();
+    const icon = <ArrowLeftIcon className="h-6 w-6 cursor-pointer" />;
     return (
-        <Link href={url}>
-            <ArrowLeftIcon className="h-6 w-6 cursor-pointer" />
-        </Link>
+        urlOverride
+            ? (
+                <Link href={urlOverride}>
+                    {icon}
+                </Link>
+            )
+            : <button onClick={goBack}>
+                {icon}
+            </button>
     )
 }
 
