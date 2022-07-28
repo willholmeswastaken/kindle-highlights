@@ -1,7 +1,7 @@
 import { RefreshIcon } from '@heroicons/react/outline'
 import React from 'react'
 
-const SkeletonResult = () => {
+export const SkeletonResult = () => {
     return (
         <div className="flex flex-row bg-white rounded-lg hover:bg-gray-50 h-16 border-y border-y-gray-100 py-3 px-2 hover:cursor-pointer">
             <div className="bg-gray-50 rounded-full p-2 h-10 w-10">
@@ -15,5 +15,3 @@ const SkeletonResult = () => {
         </div>
     )
 }
-
-export default SkeletonResult

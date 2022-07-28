@@ -1,4 +1,4 @@
-import { BookmarkIcon, CollectionIcon, SwitchHorizontalIcon } from "@heroicons/react/solid";
+import { BookmarkIcon, ChipIcon, CollectionIcon, SwitchHorizontalIcon } from "@heroicons/react/solid";
 
 export interface NavItem {
     icon: JSX.Element;
@@ -21,5 +21,10 @@ export const navItems: NavItem[] = [
         icon: <CollectionIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
         linkUrl: "/import-history",
         displayName: "Import History",
+    },
+    {
+        icon: <ChipIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
+        linkUrl: "/connections",
+        displayName: "Connections",
     }
 ];

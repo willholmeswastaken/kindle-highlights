@@ -2,8 +2,7 @@ import { PencilAltIcon } from "@heroicons/react/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import BackButton from "../../../../components/BackButton";
-import SkeletonResult from "../../../../components/SkeletonResult";
+import { BackButton, SkeletonResult } from '../../../../components';
 import { trpc } from "../../../../utils/trpc";
 
 const ViewBook: NextPage = () => {

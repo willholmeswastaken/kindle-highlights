@@ -1,12 +1,10 @@
-import { CloudUploadIcon, HeartIcon as HeartIconOutlined } from "@heroicons/react/outline";
-import { HeartIcon } from "@heroicons/react/solid";
+import { CloudUploadIcon } from "@heroicons/react/outline";
 import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import FavouriteButton from "../components/FavouriteButton";
-import SkeletonResult from "../components/SkeletonResult";
+import { FavouriteButton, SkeletonResult } from "../components";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {

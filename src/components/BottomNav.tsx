@@ -1,14 +1,14 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link'
 import React from 'react'
-import { navItems } from '../info'
+import { navItems } from '../nav'
 import { isCurrentRoute } from '../utils/routing'
 
 interface BottomNavProps {
     currentUrl: string;
 }
 
-const BottomNav = ({ currentUrl }: BottomNavProps) => {
+export const BottomNav = ({ currentUrl }: BottomNavProps) => {
     const { data: session } = useSession();
     return (
         <footer className={`${session ? 'block' : 'hidden'}`}>
@@ -32,5 +32,3 @@ const BottomNav = ({ currentUrl }: BottomNavProps) => {
         </footer>
     )
 }
-
-export default BottomNav

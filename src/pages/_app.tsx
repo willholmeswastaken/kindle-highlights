@@ -5,8 +5,7 @@ import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
-import SideNav from "../components/SideNav";
-import BottomNav from "../components/BottomNav";
+import { SideNav, BottomNav } from '../components';
 import { NextRouter, useRouter } from "next/router";
 
 const MyApp: AppType = ({
