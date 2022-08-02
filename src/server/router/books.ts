@@ -35,4 +35,21 @@ export const booksRouter = createRouter()
       });
       return book;
     },
+  })
+  .query("getBooksByImportId", {
+    input: z.object({
+      importId: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const books = await ctx.prisma.book.findMany({
+        where: {
+          importId: input.importId,
+        },
+        orderBy: {
+          title: "asc",
+        },
+      });
+
+      return books;
+    },
   });

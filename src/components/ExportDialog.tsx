@@ -1,28 +1,22 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useMemo } from 'react'
-
-type ButtonType = 'success' | 'info' | 'danger';
+import { VaultRecord, HighlightImport } from '@prisma/client';
+import { Fragment } from 'react'
+import { trpc } from '../utils/trpc';
 
 interface ExportDialogProps {
-    title: string;
-    description: string;
-    buttonText: string;
+    vaultedImport?: VaultRecord & {
+        import: HighlightImport;
+    };
     isOpen: boolean;
     closeModal: () => void;
-    buttonType: ButtonType;
 }
 
-export const ExportDialog = ({ title, description, buttonText, isOpen, closeModal, buttonType }: ExportDialogProps) => {
-    const buttonColor = useMemo(() => {
-        switch (buttonType) {
-            case 'success':
-                return 'bg-green-100 hover:bg-green-200 text-green-900 focus-visible:ring-green-500';
-            case 'info':
-                return 'bg-blue-100 hover:bg-blue-200 text-blue-900 focus-visible:ring-blue-500';
-            case 'danger':
-                return 'bg-red-100 hover:bg-red-200 text-red-900 focus-visible:ring-red-500';
-        }
-    }, [buttonType]);
+export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialogProps) => {
+    if (!vaultedImport) return null;
+
+    const { data: books, isLoading } = trpc.useQuery(["books.getBooksByImportId", {
+        importId: vaultedImport.import.id!
+    }]);
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -55,22 +49,51 @@ export const ExportDialog = ({ title, description, buttonText, isOpen, closeModa
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
-                                        {title}
+                                        Choose books below to export
                                     </Dialog.Title>
+                                    {/* added the below ui, need to polish up the programmed selections to then emit onto the next flow as part of the export click event.
+                                    That then needs to trigger a different dialog to select which integration provider to export against.
+                                    Then it needs to perform the exporting. */}
                                     <div className="mt-2">
-                                        <p className="text-sm text-gray-500">
-                                            {description}
-                                        </p>
+                                        {
+                                            vaultedImport === undefined
+                                                ? <p className="text-sm text-gray-500">
+                                                    Oops, looks like you havent selected a vault record.
+                                                </p>
+                                                : (<p className="text-sm text-gray-500">
+                                                    <div className="flex flex-col">
+                                                        {
+                                                            !isLoading && books && books.length > 0 &&
+                                                            books.map(book => (
+                                                                <div className="form-check" key={book.id}>
+                                                                    <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white text-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value={book.id} id={book.id} />
+                                                                    <label className="form-check-label inline-block text-gray-800 mt-[1.75px]" htmlFor={book.id}>
+                                                                        {book.title.substring(0, 34)}...
+                                                                    </label>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                    </div>
+                                                </p>)
+                                        }
                                     </div>
 
-                                    <div className="mt-4 flex flex-row-reverse">
+                                    <div className="mt-4 flex flex-row-reverse gap-x-4">
+
                                         <button
                                             type="button"
-                                            className={`inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${buttonColor}`}
+                                            className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-green-100 hover:bg-green-200 text-green-900 focus-visible:ring-green-500"
+                                        >
+                                            Export
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-blue-100 hover:bg-blue-200 text-blue-900 focus-visible:ring-blue-500"
                                             onClick={closeModal}
                                         >
-                                            {buttonText}
+                                            Close
                                         </button>
+
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

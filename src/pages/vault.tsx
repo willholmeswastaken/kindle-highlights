@@ -1,13 +1,26 @@
-import { KeyIcon } from "@heroicons/react/outline";
+import { KeyIcon, UploadIcon } from "@heroicons/react/outline";
+import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { ExportButton, SkeletonResult } from "../components";
+import { useState } from "react";
+import { SkeletonResult } from "../components";
+import { ExportDialog } from "../components/ExportDialog";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
     const { data: vaultRecords, isLoading } = trpc.useQuery(["vault.get"]);
+    const [selectedVaultRecord, setSelectedVaultRecord] = useState<VaultRecord & { import: HighlightImport; }>();
+    const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
+
+    const onCloseExportModal = () => {
+        setIsExportDialogOpen(false);
+    };
+    const onOpenExportModal = (vaultRecord: VaultRecord & { import: HighlightImport; }) => {
+        setSelectedVaultRecord(vaultRecord);
+        setIsExportDialogOpen(true);
+    };
     return (
         <>
             <Head>
@@ -41,7 +54,9 @@ const ImportHistory: NextPage = () => {
                                                 </div>
                                             </a>
                                         </Link>
-                                        <ExportButton onButtonClick={() => alert('doing stuff')} />
+                                        <button type="button" className="text-blue-600 font-semibold w-16 h-7 mt-1 rounded-lg" onClick={() => onOpenExportModal(x)}>
+                                            <UploadIcon className='h-full w-full' />
+                                        </button>
                                     </div>
                                 })
                                 : 'No vault records found!'
@@ -49,6 +64,11 @@ const ImportHistory: NextPage = () => {
                     </div>
                 </div>
             </div>
+            <ExportDialog
+                isOpen={isExportDialogOpen}
+                vaultedImport={selectedVaultRecord}
+                closeModal={onCloseExportModal}
+            />
         </>
     );
 };
