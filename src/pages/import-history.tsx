@@ -45,7 +45,7 @@ const ImportHistory: NextPage = () => {
                             imports.isLoading && <SkeletonResult />
                         }
                         {
-                            imports.data && imports.data.length > 0
+                            !imports.isLoading && imports.data && imports.data.length > 0
                                 ? imports.data.map(x => {
                                     return <div key={x.id} className="flex flex-row bg-white rounded-lg hover:bg-gray-50 h-fit border-y border-y-gray-100 py-3 px-2">
                                         <Link href={`/view-import/${x.id}`}>

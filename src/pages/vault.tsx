@@ -37,7 +37,7 @@ const ImportHistory: NextPage = () => {
                             isLoading && <SkeletonResult />
                         }
                         {
-                            vaultRecords && vaultRecords.length > 0
+                            !isLoading && vaultRecords && vaultRecords.length > 0
                                 ? vaultRecords.map(x => {
                                     return <div key={x.id} className="flex flex-row bg-white rounded-lg h-fit border-y border-y-gray-100 py-3 px-2">
                                         <Link key={x.id} href={`/view-import/${x.import.id}`}>

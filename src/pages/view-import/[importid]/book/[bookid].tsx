@@ -28,7 +28,7 @@ const ViewBook: NextPage = () => {
                             isLoading && <SkeletonResult />
                         }
                         {
-                            book?.highlights && book.totalHighlights > 0
+                            !isLoading && book?.highlights && book.totalHighlights > 0
                                 ? book.highlights.map(x => {
                                     return <div className="flex flex-row bg-white rounded-lg h-fit border-y border-y-gray-100 py-3 px-2" key={x.id}>
                                         <div className="bg-blue-50 rounded-full p-2 h-10 w-10">

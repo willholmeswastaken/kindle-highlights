@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { VaultRecord, HighlightImport } from '@prisma/client';
-import { Fragment } from 'react'
+import { VaultRecord, HighlightImport, Book } from '@prisma/client';
+import { ChangeEvent, Fragment, useState } from 'react'
 import { trpc } from '../utils/trpc';
 
 interface ExportDialogProps {
@@ -9,14 +9,31 @@ interface ExportDialogProps {
     };
     isOpen: boolean;
     closeModal: () => void;
+    onExport: (bookIds: string[]) => void;
 }
 
 export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialogProps) => {
-    if (!vaultedImport) return null;
+    const [selectedBooks, setSelectedBooks] = useState<string[]>();
 
     const { data: books, isLoading } = trpc.useQuery(["books.getBooksByImportId", {
-        importId: vaultedImport.import.id!
+        importId: vaultedImport?.import.id!
     }]);
+
+    const onBookSelected = (bookId: string) => {
+        if (!selectedBooks) {
+            setSelectedBooks([bookId]);
+            return;
+        }
+
+        if (selectedBooks.includes(bookId)) {
+            setSelectedBooks(selectedBooks.filter(x => x !== bookId));
+        } else {
+            setSelectedBooks([...selectedBooks, bookId]);
+        }
+    };
+
+    if (!vaultedImport) return null;
+
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -66,7 +83,13 @@ export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialog
                                                             !isLoading && books && books.length > 0 &&
                                                             books.map(book => (
                                                                 <div className="form-check" key={book.id}>
-                                                                    <input className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white text-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value={book.id} id={book.id} />
+                                                                    <input
+                                                                        className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white text-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                                                        type="checkbox"
+                                                                        value={book.id}
+                                                                        checked={selectedBooks?.some(x => x === book.id)}
+                                                                        id={book.id}
+                                                                        onChange={() => onBookSelected(book.id)} />
                                                                     <label className="form-check-label inline-block text-gray-800 mt-[1.75px]" htmlFor={book.id}>
                                                                         {book.title.substring(0, 34)}...
                                                                     </label>
