@@ -11,6 +11,15 @@ import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
     const { data: vaultRecords, isLoading } = trpc.useQuery(["vault.get"]);
+    const exportBooks = trpc.useMutation(['exporter.exportBooksByIds'], {
+        onSuccess: (data, variables, context) => {
+            setIsExportDialogOpen(false);
+            alert(`Here is the database: ${data}`);
+        },
+        onError: (error, variables, context) => {
+            alert('oops');
+        },
+    });
     const [selectedVaultRecord, setSelectedVaultRecord] = useState<VaultRecord & { import: HighlightImport; }>();
     const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
 
@@ -68,6 +77,7 @@ const ImportHistory: NextPage = () => {
                 isOpen={isExportDialogOpen}
                 vaultedImport={selectedVaultRecord}
                 closeModal={onCloseExportModal}
+                onExport={(bookIds) => exportBooks.mutate({ bookIds })}
             />
         </>
     );

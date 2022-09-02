@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { VaultRecord, HighlightImport, Book } from '@prisma/client';
-import { ChangeEvent, Fragment, useState } from 'react'
+import { VaultRecord, HighlightImport } from '@prisma/client';
+import { Fragment, useMemo, useState } from 'react'
 import { trpc } from '../utils/trpc';
 
 interface ExportDialogProps {
@@ -12,12 +12,17 @@ interface ExportDialogProps {
     onExport: (bookIds: string[]) => void;
 }
 
-export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialogProps) => {
+export const ExportDialog = ({ vaultedImport, isOpen, closeModal, onExport }: ExportDialogProps) => {
     const [selectedBooks, setSelectedBooks] = useState<string[]>();
 
     const { data: books, isLoading } = trpc.useQuery(["books.getBooksByImportId", {
         importId: vaultedImport?.import.id!
     }]);
+
+    useMemo(() => {
+        if (!isOpen)
+            setSelectedBooks([]);
+    }, [isOpen]);
 
     const onBookSelected = (bookId: string) => {
         if (!selectedBooks) {
@@ -106,6 +111,7 @@ export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialog
                                         <button
                                             type="button"
                                             className="inline-flex justify-center rounded-md border border-transparent px-4 py-2 text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 bg-green-100 hover:bg-green-200 text-green-900 focus-visible:ring-green-500"
+                                            onClick={() => onExport(selectedBooks ?? [])}
                                         >
                                             Export
                                         </button>
