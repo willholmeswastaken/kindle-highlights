@@ -1,13 +1,32 @@
-import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
+import { CloudArrowUpIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import { FavouriteButton, SkeletonResult } from "../components";
+import { RemoveImportDialog } from "../components/RemoveImportDialog";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
+    const [showRemoveImportDialog, setShowRemoveImportDialog] = useState<boolean>(false);
+    const [importIdToRemove, setImportIdToRemove] = useState<string | undefined>(undefined);
+
+    const onCloseRemoveImportDialog = (): void => {
+        setShowRemoveImportDialog(false);
+        setImportIdToRemove(undefined);
+    };
+
+    const onOpenRemoveImportDialog = (importId: string): void => {
+        setImportIdToRemove(importId);
+        setShowRemoveImportDialog(true);
+    };
+
+    const onImportRemovedFromApp = (): void => {
+        imports.refetch();
+    };
+
     const imports = trpc.useQuery(["imports.getAllImports"]);
     const addToVault = trpc.useMutation(['vault.addImport'], {
         onSuccess: () => {
@@ -47,6 +66,7 @@ const ImportHistory: NextPage = () => {
                         {
                             !imports.isLoading && imports.data && imports.data.length > 0
                                 ? imports.data.map(x => {
+                                    const isFavourite = x.vaultRecord !== null;
                                     return <div key={x.id} className="flex flex-row bg-white rounded-lg hover:bg-gray-50 h-fit border-y border-y-gray-100 py-3 px-2">
                                         <Link href={`/view-import/${x.id}`}>
                                             <a className="flex flex-row flex-grow hover:cursor-pointer" key={x.id}>
@@ -62,7 +82,13 @@ const ImportHistory: NextPage = () => {
                                                 </div>
                                             </a>
                                         </Link>
-                                        <FavouriteButton isFavourite={x.vaultRecord !== null} onButtonClick={() => onVaultInteractionClicked(x)} />
+                                        <div className="inline-block">
+                                            <FavouriteButton isFavourite={isFavourite} onButtonClick={() => onVaultInteractionClicked(x)} />
+                                            <button type="button" disabled={isFavourite} className="text-red-600 font-semibold w-16 h-7 mt-1 rounded-lg disabled:cursor-not-allowed" onClick={() => onOpenRemoveImportDialog(x.id)}>
+                                                <TrashIcon className='h-full w-full' />
+                                            </button>
+                                        </div>
+
                                     </div>;
                                 })
                                 : 'No imports found!'
@@ -70,6 +96,11 @@ const ImportHistory: NextPage = () => {
                     </div>
                 </div>
             </div>
+            <RemoveImportDialog
+                importId={importIdToRemove!}
+                isOpen={showRemoveImportDialog}
+                closeModal={onCloseRemoveImportDialog}
+                onRemoved={onImportRemovedFromApp} />
         </>
     );
 };

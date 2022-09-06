@@ -53,4 +53,27 @@ export const importsRouter = createRouter()
       }
       return retrievedImport.books;
     },
+  })
+  .mutation("removeImport", {
+    input: z.object({
+      importId: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      if (!ctx.session?.user) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+
+      const isImportedVaulted = await ctx.prisma.vaultRecord.findUnique({
+        where: {
+          importId: input.importId,
+        },
+      });
+      if (isImportedVaulted) throw new TRPCError({ code: "FORBIDDEN" });
+
+      await ctx.prisma.highlightImport.delete({
+        where: {
+          id: input.importId,
+        },
+      });
+    },
   });
