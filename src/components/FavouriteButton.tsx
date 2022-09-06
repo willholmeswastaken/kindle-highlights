@@ -1,5 +1,5 @@
-import { HeartIcon } from '@heroicons/react/solid';
-import { HeartIcon as HeartIconOutlined } from '@heroicons/react/outline';
+import { HeartIcon } from '@heroicons/react/24/solid';
+import { HeartIcon as HeartIconOutlined } from '@heroicons/react/24/outline';
 import React from 'react'
 
 interface FavouriteButtonProps {

@@ -31,7 +31,7 @@ export class Notion {
         title: [
           {
             text: {
-              content: "Kindle Highlights",
+              content: `Kindle Highlights - ${new Date().toLocaleString()}`,
             },
             type: "text",
           },

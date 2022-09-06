@@ -1,4 +1,4 @@
-import { BookmarkIcon, ChipIcon, CollectionIcon, SwitchHorizontalIcon } from "@heroicons/react/solid";
+import { BookmarkIcon, CpuChipIcon, RectangleStackIcon, ArrowUpOnSquareIcon } from "@heroicons/react/24/solid";
 
 export interface NavItem {
     icon: JSX.Element;
@@ -13,17 +13,17 @@ export const navItems: NavItem[] = [
         displayName: "Vault",
     },
     {
-        icon: <SwitchHorizontalIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
+        icon: <ArrowUpOnSquareIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
         linkUrl: "/import",
         displayName: "Import",
     },
     {
-        icon: <CollectionIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
+        icon: <RectangleStackIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
         linkUrl: "/import-history",
         displayName: "Import History",
     },
     {
-        icon: <ChipIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
+        icon: <CpuChipIcon className="inline-block h-8 w-8 sm:h-6 sm:w-6 m-2" />,
         linkUrl: "/connections",
         displayName: "Connections",
     }

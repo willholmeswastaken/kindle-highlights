@@ -1,4 +1,4 @@
-import { UploadIcon } from "@heroicons/react/outline";
+import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -78,7 +78,7 @@ const Import: NextPage = () => {
                         <div className="flex flex-col bg-white rounded-lg w-full xl:w-2/3 h-fit py-2">
                             <div className="flex flex-row gap-x-4 mt-1 ml-3">
                                 <div className="bg-blue-50 rounded-full p-2 h-10 w-10 mt-1">
-                                    <UploadIcon className="h-6 w-6 text-blue-600 " />
+                                    <ArrowUpTrayIcon className="h-6 w-6 text-blue-600 " />
                                 </div>
                                 <div className="flex flex-grow flex-col">
                                     <span className="text-md text-brandText">Your file</span>

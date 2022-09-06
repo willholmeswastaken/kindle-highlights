@@ -1,4 +1,4 @@
-import { CloudUploadIcon } from "@heroicons/react/outline";
+import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
@@ -51,7 +51,7 @@ const ImportHistory: NextPage = () => {
                                         <Link href={`/view-import/${x.id}`}>
                                             <a className="flex flex-row flex-grow hover:cursor-pointer" key={x.id}>
                                                 <div className="bg-blue-50 rounded-full p-2 h-10 w-10">
-                                                    <CloudUploadIcon className="h-6 w-6 text-blue-600 " />
+                                                    <CloudArrowUpIcon className="h-6 w-6 text-blue-600 " />
                                                 </div>
                                                 <div className="flex flex-col pl-2 flex-grow w-full">
                                                     <span className="text-brandText hidden md:block capitalize">Imported {formatRelative(x.importedOn, new Date())}</span>

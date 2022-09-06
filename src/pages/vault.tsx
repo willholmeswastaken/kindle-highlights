@@ -1,4 +1,4 @@
-import { KeyIcon, UploadIcon } from "@heroicons/react/outline";
+import { KeyIcon, ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
 import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
@@ -9,17 +9,8 @@ import { SkeletonResult } from "../components";
 import { ExportDialog } from "../components/ExportDialog";
 import { trpc } from "../utils/trpc";
 
-const ImportHistory: NextPage = () => {
+const Vault: NextPage = () => {
     const { data: vaultRecords, isLoading } = trpc.useQuery(["vault.get"]);
-    const exportBooks = trpc.useMutation(['exporter.exportBooksByIds'], {
-        onSuccess: (data, variables, context) => {
-            setIsExportDialogOpen(false);
-            alert(`Here is the database: ${data}`);
-        },
-        onError: (error, variables, context) => {
-            alert('oops');
-        },
-    });
     const [selectedVaultRecord, setSelectedVaultRecord] = useState<VaultRecord & { import: HighlightImport; }>();
     const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
 
@@ -64,7 +55,7 @@ const ImportHistory: NextPage = () => {
                                             </a>
                                         </Link>
                                         <button type="button" className="text-blue-600 font-semibold w-16 h-7 mt-1 rounded-lg" onClick={() => onOpenExportModal(x)}>
-                                            <UploadIcon className='h-full w-full' />
+                                            <ArrowUpOnSquareIcon className='h-full w-full' />
                                         </button>
                                     </div>
                                 })
@@ -77,10 +68,9 @@ const ImportHistory: NextPage = () => {
                 isOpen={isExportDialogOpen}
                 vaultedImport={selectedVaultRecord}
                 closeModal={onCloseExportModal}
-                onExport={(bookIds) => exportBooks.mutate({ bookIds })}
             />
         </>
     );
 };
 
-export default ImportHistory;
+export default Vault;
