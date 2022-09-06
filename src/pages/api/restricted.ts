@@ -6,6 +6,7 @@ import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, nextAuthOptions);
+  
 
   if (session) {
     res.send({

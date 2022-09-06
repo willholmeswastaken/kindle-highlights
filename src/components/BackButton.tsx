@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from '@heroicons/react/solid';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react'
@@ -7,7 +7,7 @@ interface BackButtonProps {
     urlOverride?: string;
 }
 
-const BackButton = ({ urlOverride }: BackButtonProps) => {
+export const BackButton = ({ urlOverride }: BackButtonProps) => {
     const router = useRouter();
     const goBack = () => router.back();
     const icon = <ArrowLeftIcon className="h-6 w-6 cursor-pointer" />;
@@ -23,5 +23,3 @@ const BackButton = ({ urlOverride }: BackButtonProps) => {
             </button>
     )
 }
-
-export default BackButton

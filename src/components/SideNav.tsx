@@ -1,7 +1,7 @@
 import React from "react";
 import { HoverLink } from ".";
 import IdentityPanel from "./identity/identityPanel";
-import { navItems } from "../info";
+import { navItems } from "../nav";
 import { isCurrentRoute } from "../utils/routing";
 import { useSession } from "next-auth/react";
 
@@ -9,7 +9,7 @@ interface SideNavProps {
     currentUrl: string;
 }
 
-const SideNav = ({ currentUrl }: SideNavProps) => {
+export const SideNav = ({ currentUrl }: SideNavProps) => {
     const { data: session } = useSession();
     return (
         <nav className="flex-auto sm:w-[12rem] md:w-[26rem]">
@@ -41,5 +41,3 @@ const SideNav = ({ currentUrl }: SideNavProps) => {
         </nav>
     );
 };
-
-export default SideNav;

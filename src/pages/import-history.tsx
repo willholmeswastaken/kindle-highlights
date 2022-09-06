@@ -1,12 +1,10 @@
-import { CloudUploadIcon, HeartIcon as HeartIconOutlined } from "@heroicons/react/outline";
-import { HeartIcon } from "@heroicons/react/solid";
+import { CloudArrowUpIcon } from "@heroicons/react/24/outline";
 import { HighlightImport, VaultRecord } from "@prisma/client";
 import { formatDistance, formatRelative } from "date-fns";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import FavouriteButton from "../components/FavouriteButton";
-import SkeletonResult from "../components/SkeletonResult";
+import { FavouriteButton, SkeletonResult } from "../components";
 import { trpc } from "../utils/trpc";
 
 const ImportHistory: NextPage = () => {
@@ -47,13 +45,13 @@ const ImportHistory: NextPage = () => {
                             imports.isLoading && <SkeletonResult />
                         }
                         {
-                            imports.data && imports.data.length > 0
+                            !imports.isLoading && imports.data && imports.data.length > 0
                                 ? imports.data.map(x => {
                                     return <div key={x.id} className="flex flex-row bg-white rounded-lg hover:bg-gray-50 h-fit border-y border-y-gray-100 py-3 px-2">
                                         <Link href={`/view-import/${x.id}`}>
                                             <a className="flex flex-row flex-grow hover:cursor-pointer" key={x.id}>
                                                 <div className="bg-blue-50 rounded-full p-2 h-10 w-10">
-                                                    <CloudUploadIcon className="h-6 w-6 text-blue-600 " />
+                                                    <CloudArrowUpIcon className="h-6 w-6 text-blue-600 " />
                                                 </div>
                                                 <div className="flex flex-col pl-2 flex-grow w-full">
                                                     <span className="text-brandText hidden md:block capitalize">Imported {formatRelative(x.importedOn, new Date())}</span>

@@ -1,11 +1,10 @@
-import { BookOpenIcon } from "@heroicons/react/outline";
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 import { Book } from "@prisma/client";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import BackButton from "../../../components/BackButton";
-import SkeletonResult from "../../../components/SkeletonResult";
+import { BackButton, SkeletonResult } from '../../../components';
 import { trpc } from "../../../utils/trpc";
 
 const ViewImport: NextPage = () => {

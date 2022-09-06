@@ -1,9 +1,8 @@
-import { PencilAltIcon } from "@heroicons/react/outline";
+import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import BackButton from "../../../../components/BackButton";
-import SkeletonResult from "../../../../components/SkeletonResult";
+import { BackButton, SkeletonResult } from '../../../../components';
 import { trpc } from "../../../../utils/trpc";
 
 const ViewBook: NextPage = () => {
@@ -29,11 +28,11 @@ const ViewBook: NextPage = () => {
                             isLoading && <SkeletonResult />
                         }
                         {
-                            book?.highlights && book.totalHighlights > 0
+                            !isLoading && book?.highlights && book.totalHighlights > 0
                                 ? book.highlights.map(x => {
                                     return <div className="flex flex-row bg-white rounded-lg h-fit border-y border-y-gray-100 py-3 px-2" key={x.id}>
                                         <div className="bg-blue-50 rounded-full p-2 h-10 w-10">
-                                            <PencilAltIcon className="h-6 w-6 text-blue-600 " />
+                                            <PencilSquareIcon className="h-6 w-6 text-blue-600 " />
                                         </div>
                                         <div className="flex flex-col pl-2 flex-grow w-full">
                                             <div className="flex flex-col md:flex-row md:gap-x-1">
