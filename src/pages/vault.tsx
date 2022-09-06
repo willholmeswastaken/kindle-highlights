@@ -5,21 +5,29 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
-import { SkeletonResult } from "../components";
+import { FavouriteButton, SkeletonResult } from "../components";
 import { ExportDialog } from "../components/ExportDialog";
 import { trpc } from "../utils/trpc";
 
 const Vault: NextPage = () => {
-    const { data: vaultRecords, isLoading } = trpc.useQuery(["vault.get"]);
+    const { data: vaultRecords, isLoading, refetch } = trpc.useQuery(["vault.get"]);
+    const removeFromVault = trpc.useMutation(['vault.removeImport'], {
+        onSuccess: () => {
+            refetch();
+        }
+    });
     const [selectedVaultRecord, setSelectedVaultRecord] = useState<VaultRecord & { import: HighlightImport; }>();
     const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
 
-    const onCloseExportModal = () => {
+    const onCloseExportModal = (): void => {
         setIsExportDialogOpen(false);
     };
-    const onOpenExportModal = (vaultRecord: VaultRecord & { import: HighlightImport; }) => {
+    const onOpenExportModal = (vaultRecord: VaultRecord & { import: HighlightImport; }): void => {
         setSelectedVaultRecord(vaultRecord);
         setIsExportDialogOpen(true);
+    };
+    const onRemoveFromVault = (importId: string): void => {
+        removeFromVault.mutate({ importId });
     };
     return (
         <>
@@ -54,9 +62,12 @@ const Vault: NextPage = () => {
                                                 </div>
                                             </a>
                                         </Link>
-                                        <button type="button" className="text-blue-600 font-semibold w-16 h-7 mt-1 rounded-lg" onClick={() => onOpenExportModal(x)}>
-                                            <ArrowUpOnSquareIcon className='h-full w-full' />
-                                        </button>
+                                        <div className="inline-block">
+                                            <FavouriteButton isFavourite onButtonClick={() => onRemoveFromVault(x.importId)} />
+                                            <button type="button" className="text-blue-600 font-semibold w-16 h-7 mt-1 rounded-lg" onClick={() => onOpenExportModal(x)}>
+                                                <ArrowUpOnSquareIcon className='h-full w-full' />
+                                            </button>
+                                        </div>
                                     </div>
                                 })
                                 : 'No vault records found!'
