@@ -4,20 +4,10 @@ import { VaultRecord, HighlightImport } from '@prisma/client';
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { trpc } from '../utils/trpc';
 
-interface ExportDialogProps {
-    vaultedImport?: VaultRecord & {
-        import: HighlightImport;
-    };
-    isOpen: boolean;
-    closeModal: () => void;
-}
-
 type ExportResultStatus = 'success' | 'failed';
-
 interface CommonExportResult {
     status: ExportResultStatus;
 }
-
 interface ExportFailedResult extends CommonExportResult {
     status: 'failed'
 }
@@ -25,8 +15,15 @@ interface ExportSuccessResult extends CommonExportResult {
     status: 'success';
     exportedLinkUrl: string;
 }
-
 type ExportResult = ExportSuccessResult | ExportFailedResult;
+
+interface ExportDialogProps {
+    vaultedImport?: VaultRecord & {
+        import: HighlightImport;
+    };
+    isOpen: boolean;
+    closeModal: () => void;
+}
 export const ExportDialog = ({ vaultedImport, isOpen, closeModal }: ExportDialogProps) => {
     const [selectedBooks, setSelectedBooks] = useState<string[]>();
     const [exportResult, setExportResult] = useState<ExportResult | undefined>(undefined);
